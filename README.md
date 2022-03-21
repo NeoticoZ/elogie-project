@@ -18,7 +18,7 @@ Tecnologias utilizadas até o momento:
 
 5. Typescript
 
-Você pode vê-lo funcionando <a  href="https://elogiemais.netlify.app/">aqui</a>.
+Você pode vê-lo funcionando <a href="https://elogiemais.netlify.app/" target="_blank">aqui</a>.
 
 ## Back-end
 
