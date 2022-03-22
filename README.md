@@ -1,6 +1,6 @@
 # Projeto Elogie +
 
-Projeto completo sendo desenvolvido em React e Node, cujo o principal objetivo é poder fazer elogios a outros membros e desta forma, demonstrar reconhecimento pelo trabalho desempenhado. Funciona bem em ambientes de trabalho.
+Projeto full-stack sendo desenvolvido em React e Node, cujo o principal objetivo é fazer elogios a outros membros, demonstrando reconhecimento pelo trabalho desempenhado. Funciona bem em ambientes de trabalho.
 
 O back-end, eu fiz como parte do evento NLW 6 da Rocketseat, onde estive estudando sobre o Node.
 
