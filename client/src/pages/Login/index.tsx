@@ -1,22 +1,34 @@
 import { Link } from "react-router-dom";
+import ElogieLogo from "../../components/ElogieLogo";
 import LoginForm from "../../components/LoginForm";
-import { Container, Content } from "./styles";
+import {
+  DescriptionParagraph,
+  LoginContainer,
+  LoginContentFooter,
+  LoginContentWrapper,
+  LogoWrapper,
+} from "./styles";
 
 const Login: React.FC = () => {
   return (
-    <Container>
-      <Content>
-        <div className="logo">
-          <Link to="/">
-            Elogie<span>+</span>
-          </Link>
-        </div>
+    <LoginContainer>
+      <LoginContentWrapper>
+        <LogoWrapper>
+          <ElogieLogo />
+        </LogoWrapper>
 
-        <p className="description">É muito bom ter você de volta!</p>
+        <DescriptionParagraph>
+          É muito bom ter você de volta!
+        </DescriptionParagraph>
 
         <LoginForm />
-      </Content>
-    </Container>
+
+        <LoginContentFooter>
+          <span>Ainda não tem conta?</span>
+          <Link to="/register">Cadastre-se</Link>
+        </LoginContentFooter>
+      </LoginContentWrapper>
+    </LoginContainer>
   );
 };
 

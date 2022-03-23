@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Input from "../Input";
 import SubmitButton from "../SubmitButton";
 import { FormContainer } from "./styles";
@@ -23,11 +22,6 @@ const LoginForm: React.FC = () => {
       />
 
       <SubmitButton>Fazer login</SubmitButton>
-
-      <div className="row align-center">
-        <span>Ainda não tem conta?</span>
-        <Link to="/register">Fazer cadastro</Link>
-      </div>
     </FormContainer>
   );
 };

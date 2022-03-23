@@ -22,7 +22,7 @@ export const InputContainer = styled.div`
 
     border: 1px solid var(--bs-gray-350);
 
-    transition: outline 0.06s linear;
+    transition: outline 0.03s linear;
 
     &:focus {
       outline: 3px solid rgba(var(--bs-primary-rgb), 0.8);

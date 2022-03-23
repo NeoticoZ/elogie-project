@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LoginContainer = styled.main`
+export const RegisterContainer = styled.main`
   width: 100vw;
   height: 100vh;
 
@@ -9,7 +9,7 @@ export const LoginContainer = styled.main`
   align-items: center;
 `;
 
-export const LoginContentWrapper = styled.section`
+export const RegisterContentWrapper = styled.section`
   max-width: 30rem;
   width: 100%;
 
@@ -39,7 +39,7 @@ export const DescriptionParagraph = styled.p`
   margin-top: 1.2rem;
 `;
 
-export const LoginContentFooter = styled.div`
+export const RegisterContentFooter = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;

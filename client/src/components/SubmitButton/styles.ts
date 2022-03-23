@@ -17,7 +17,7 @@ export const ButtonContainer = styled.button`
   }
 
   &:focus {
-    transition: outline 0.06s linear;
+    transition: outline 0.03s linear;
 
     outline: 4px solid rgba(var(--bs-primary-rgb), 0.4);
   }
