@@ -1,21 +1,21 @@
 import { Link } from "react-router-dom";
 import ElogieLogo from "../../components/ElogieLogo";
 import {
+  Header,
   HomeContainer,
   HomeContentWrapper,
-  HomeHeroTextContent,
-  LogoWrapper,
+  HomeHeroContent,
 } from "./styles";
 
 const Home: React.FC = () => {
   return (
     <HomeContainer>
       <HomeContentWrapper>
-        <LogoWrapper>
+        <Header>
           <ElogieLogo />
-        </LogoWrapper>
+        </Header>
 
-        <HomeHeroTextContent>
+        <HomeHeroContent>
           <h1>Projeto Elogie +</h1>
 
           <p>
@@ -23,10 +23,16 @@ const Home: React.FC = () => {
             valorizar companheiros, melhorando a convivência entre todos.
           </p>
 
-          <p>Comece agora fazendo a diferença no seu time!</p>
+          <p>Faça a diferença no seu time!</p>
 
-          <Link to="/register">Criar uma conta</Link>
-        </HomeHeroTextContent>
+          <div className="buttons-wrapper">
+            <Link to="/register">Comece agora</Link>
+
+            <Link className="outline" to="/login">
+              Fazer login
+            </Link>
+          </div>
+        </HomeHeroContent>
       </HomeContentWrapper>
     </HomeContainer>
   );
