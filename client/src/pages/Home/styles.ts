@@ -19,25 +19,6 @@ export const HomeContentWrapper = styled.section`
   }
 `;
 
-export const Header = styled.header`
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-
-  margin-top: 1rem;
-
-  a {
-    font-size: 3rem;
-  }
-
-  @media (max-width: 500px) {
-    a {
-      font-size: 2.8rem;
-    }
-  }
-`;
-
 export const HomeHeroContent = styled.div`
   width: 100%;
 
@@ -56,38 +37,6 @@ export const HomeHeroContent = styled.div`
     font-size: 1.5rem;
   }
 
-  a {
-    width: 13rem;
-    height: 3.5rem;
-
-    font-size: 1.2rem;
-
-    text-decoration: none;
-    border-radius: 6px;
-
-    color: white;
-    background: var(--bs-blue);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &.outline {
-      color: var(--bs-blue);
-      background: var(--bs-white);
-
-      border: 1.5px solid var(--bs-blue);
-    }
-  }
-
-  .buttons-wrapper {
-    display: flex;
-    justify-content: flex-start;
-    gap: 1rem;
-
-    margin-top: 2rem;
-  }
-
   @media (max-width: 500px) {
     h1 {
       font-size: 2.9rem;
@@ -98,13 +47,32 @@ export const HomeHeroContent = styled.div`
       text-align: center;
       font-size: 1.3rem;
     }
+  }
+`;
 
-    .buttons-wrapper {
-      margin: 0 auto;
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
 
-      a {
-        width: 10rem;
-      }
+  gap: 1rem;
+
+  margin-top: 2rem;
+
+  a {
+    width: 13rem;
+    font-size: 1.3rem;
+  }
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    -ms-flex-direction: column;
+    gap: 1rem;
+
+    margin-top: 0.5rem;
+
+    a {
+      width: 100%;
+      font-size: 1.2rem;
     }
   }
 `;

@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { InputContainer } from "./styles";
 
 interface InputProps {
@@ -7,6 +8,7 @@ interface InputProps {
   placeholder?: string;
   isRequired?: boolean;
   inputValue?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -16,6 +18,7 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   isRequired,
   inputValue,
+  onChange,
 }) => {
   return (
     <InputContainer>
@@ -29,6 +32,7 @@ const Input: React.FC<InputProps> = ({
         required={isRequired}
         aria-required={isRequired}
         value={inputValue}
+        onChange={onChange}
       />
     </InputContainer>
   );

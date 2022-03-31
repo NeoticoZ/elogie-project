@@ -1,20 +1,31 @@
-import { Link } from "react-router-dom";
-import ElogieLogo from "../../components/ElogieLogo";
+import { parseCookies } from "nookies";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
+import LinkButton from "../../components/LinkButton";
 import {
-  Header,
+  ButtonsWrapper,
   HomeContainer,
   HomeContentWrapper,
   HomeHeroContent,
 } from "./styles";
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
+
+  const cookies = parseCookies();
+
+  useEffect(() => {
+    if (cookies.token) {
+      navigate("/dashboard");
+    }
+  }, []);
+
   return (
     <HomeContainer>
-      <HomeContentWrapper>
-        <Header>
-          <ElogieLogo />
-        </Header>
+      <Header />
 
+      <HomeContentWrapper>
         <HomeHeroContent>
           <h1>Projeto Elogie +</h1>
 
@@ -25,13 +36,13 @@ const Home: React.FC = () => {
 
           <p>Faça a diferença no seu time!</p>
 
-          <div className="buttons-wrapper">
-            <Link to="/register">Comece agora</Link>
+          <ButtonsWrapper>
+            <LinkButton to="/register">Comece agora</LinkButton>
 
-            <Link className="outline" to="/login">
+            <LinkButton outline to="/login">
               Fazer login
-            </Link>
-          </div>
+            </LinkButton>
+          </ButtonsWrapper>
         </HomeHeroContent>
       </HomeContentWrapper>
     </HomeContainer>
