@@ -1,13 +1,16 @@
 import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { useAuth } from "../../hooks/useAuth";
 import { api } from "../../services/api";
 import {
   DashboardContainer,
   DashboardContentWrapper,
+  UserCardWide,
+  UsersCardWrapper,
   UserCard,
-  UserCardsWrapper,
+  EditIcon,
 } from "./styles";
 
 interface User {
@@ -20,35 +23,63 @@ interface User {
 
 const Dashboard: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
 
-  const cookies = parseCookies();
+  const { token } = parseCookies();
+
+  const navigate = useNavigate();
+
+  function checkAdmin(user: User | null) {
+    if (user?.admin) {
+      setIsAdmin(true);
+    }
+  }
 
   useEffect(() => {
-    if (user) {
-      api
-        .get("/users", {
-          headers: {
-            Authorization: `Bearer ${cookies.token}`,
-          },
-        })
-        .then((response) => {
-          setUsers(response.data);
-        });
-    }
+    checkAdmin(user);
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (token) {
+        const response = await api.get("/users");
+        const users = response.data;
+
+        const filteredUsers = users.filter(
+          (users: User) => users.name !== user?.name
+        );
+
+        setUsers(filteredUsers);
+      } else {
+        navigate("/login");
+      }
+    })();
+  }, [user]);
 
   return (
     <DashboardContainer>
       <Header />
 
       <DashboardContentWrapper>
-        <h1 className="dashboard-title">Usuários cadastrados</h1>
+        <UserCard>
+          <div className="fake-avatar">{user?.name?.[0]}</div>
 
-        <UserCardsWrapper>
+          <strong className="user-name">{user?.name}</strong>
+
+          <span className="user-email">{user?.email}</span>
+
+          {user?.admin && <span className="user-admin">Administrador</span>}
+
+          <button className="logout-button" onClick={signOut}>
+            Sair
+          </button>
+        </UserCard>
+
+        <UsersCardWrapper>
           {users.map((user) => (
-            <UserCard key={user.id}>
+            <UserCardWide key={user.id}>
               <div className="fake-avatar">{user.name[0]}</div>
 
               <div className="user-info">
@@ -56,9 +87,17 @@ const Dashboard: React.FC = () => {
 
                 <span className="user-email">{user.email}</span>
               </div>
-            </UserCard>
+
+              {user.admin && <span className="user-admin">Admin</span>}
+
+              <button className="compliment-button">Elogiar</button>
+
+              <button className="see-compliments-button">Ver elogios</button>
+
+              {isAdmin && <EditIcon />}
+            </UserCardWide>
           ))}
-        </UserCardsWrapper>
+        </UsersCardWrapper>
       </DashboardContentWrapper>
     </DashboardContainer>
   );

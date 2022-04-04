@@ -34,3 +34,26 @@ export const HeaderWrapper = styled.div`
     margin: 0 2rem;
   }
 `;
+
+export const NavigationLinks = styled.nav`
+  margin-left: auto;
+
+  .link {
+    padding: 0.4rem 1.5rem;
+    font-size: 1rem;
+
+    text-decoration: none;
+
+    color: var(--bs-white);
+    background: var(--bs-blue);
+
+    display: flex;
+    align-items: center;
+
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--bs-gray-900);
+    }
+  }
+`;

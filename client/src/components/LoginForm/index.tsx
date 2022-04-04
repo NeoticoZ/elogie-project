@@ -8,21 +8,21 @@ const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { signIn, user } = useAuth();
+  const { signIn } = useAuth();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleLoginSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const data = {
+    const userData = {
       email,
       password,
     };
 
-    signIn(data);
+    signIn(userData);
   };
 
   return (
-    <FormContainer onSubmit={handleSubmit}>
+    <FormContainer onSubmit={handleLoginSubmit}>
       <Input
         type="email"
         name="userMail"
@@ -41,7 +41,7 @@ const LoginForm: React.FC = () => {
         onChange={(event) => setPassword(event.target.value)}
       />
 
-      <SubmitButton>Fazer login {user?.name}</SubmitButton>
+      <SubmitButton>Fazer login</SubmitButton>
     </FormContainer>
   );
 };

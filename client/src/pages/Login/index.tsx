@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ElogieLogo from "../../components/ElogieLogo";
 import LoginForm from "../../components/LoginForm";
+import { useAuth } from "../../hooks/useAuth";
 import {
   DescriptionParagraph,
   LoginContainer,
@@ -14,13 +15,15 @@ import {
 const Login: React.FC = () => {
   const navigate = useNavigate();
 
+  const { isAuthenticated, user } = useAuth();
+
   const cookies = parseCookies();
 
   useEffect(() => {
     if (cookies.token) {
       navigate("/dashboard");
     }
-  }, []);
+  }, [isAuthenticated, user]);
 
   return (
     <LoginContainer>

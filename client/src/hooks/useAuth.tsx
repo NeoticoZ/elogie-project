@@ -1,4 +1,4 @@
-import { parseCookies, setCookie } from "nookies";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
 import {
   createContext,
   ReactNode,
@@ -9,9 +9,11 @@ import {
 import { api } from "../services/api";
 
 interface User {
-  id?: string;
-  name?: string;
+  admin: boolean;
+  id: string;
+  name: string;
   email: string;
+  created_at: string;
 }
 
 interface SignInCredentials {
@@ -19,33 +21,48 @@ interface SignInCredentials {
   password: string;
 }
 
-interface AuthContext {
+interface SignUpCredentials extends SignInCredentials {
+  name: string;
+}
+
+interface AuthContextData {
   isAuthenticated: boolean;
   user: User | null;
   signIn(credentials: SignInCredentials): Promise<void>;
-
-  // signOut(): void;
+  signUp(credentials: SignUpCredentials): Promise<void>;
+  signOut(): void;
 }
 
 interface AuthContextProviderProps {
   children: ReactNode;
 }
 
-export const AuthContext = createContext({} as AuthContext);
+export const AuthContext = createContext({} as AuthContextData);
+
+export function signOut() {
+  destroyCookie(null, "token");
+
+  window.location.href = "/";
+}
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState({} as User);
   const isAuthenticated = !!user;
 
   useEffect(() => {
-    const { token: token } = parseCookies();
+    const { token } = parseCookies();
 
     if (token) {
-      api.get("/user").then((response) => {
-        const { email, name, id } = response.data;
+      api
+        .get("/user")
+        .then((response) => {
+          const user = response.data;
 
-        setUser({ email, name, id });
-      });
+          setUser(user);
+        })
+        .catch(() => {
+          signOut();
+        });
     }
   }, []);
 
@@ -56,7 +73,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         password,
       });
 
-      const token = response.data;
+      const token = response.data.token;
+      const user = response.data.user;
 
       setCookie(null, "token", token, {
         maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -68,16 +86,47 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       //   path: "/",
       // });
 
-      setUser({
+      setUser(user);
+
+      window.location.href = "/dashboard";
+    } catch (error: any) {
+      console.log(error.response.data.error);
+    }
+  };
+
+  const signUp = async ({ name, email, password }: SignUpCredentials) => {
+    try {
+      const response = await api.post("register", {
+        name,
         email,
+        password,
       });
-    } catch (error) {
-      console.log(error);
+
+      const token = response.data.token;
+      const user = response.data.user;
+
+      setCookie(null, "token", token, {
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+        path: "/",
+      });
+
+      // setCookie(null, "refreshToken", refreshToken, {
+      //   maxAge: 30 * 24 * 60 * 60, // 30 days
+      //   path: "/",
+      // });
+
+      setUser(user);
+
+      window.location.href = "/dashboard";
+    } catch (error: any) {
+      console.log(error.response.data.error);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, signIn, signUp, signOut }}
+    >
       {children}
     </AuthContext.Provider>
   );
