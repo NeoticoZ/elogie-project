@@ -1,4 +1,5 @@
 import { hash } from "bcryptjs";
+import { sign } from "jsonwebtoken";
 import { getCustomRepository } from "typeorm";
 import { UsersRepositories } from "../repositories/UsersRepositories";
 
@@ -14,7 +15,7 @@ class CreateUserService {
     const usersRepository = getCustomRepository(UsersRepositories);
 
     if (!email) {
-      throw new Error("Email incorrect");
+      throw new Error("The email is incorrect");
     }
 
     const userAlreadyExists = await usersRepository.findOne({
@@ -22,7 +23,7 @@ class CreateUserService {
     });
 
     if (userAlreadyExists) {
-      throw new Error("User already exists");
+      throw new Error("This user already exists");
     }
 
     const passwordHash = await hash(password, 8);
@@ -36,7 +37,18 @@ class CreateUserService {
 
     await usersRepository.save(user);
 
-    return user;
+    const token = sign(
+      {
+        email: user.email,
+      },
+      "0b4ddee4467b9c5d6caeed71a91df77f",
+      {
+        subject: user.id,
+        expiresIn: "1d",
+      }
+    );
+
+    return token;
   }
 }
 

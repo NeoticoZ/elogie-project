@@ -3,6 +3,7 @@ import { AuthenticateUserController } from "./controllers/AuthenticateUserContro
 import { CreateComplimentController } from "./controllers/CreateComplimentController";
 import { CreateTagController } from "./controllers/CreateTagController";
 import { CreateUserController } from "./controllers/CreateUserController";
+import { FindUserDataController } from "./controllers/FindUserDataController";
 import { ListTagsController } from "./controllers/ListTagsController";
 import { ListUserReceiveComplimentsController } from "./controllers/ListUserReceiveComplimentsController";
 import { ListUsersController } from "./controllers/ListUsersController";
@@ -22,8 +23,9 @@ const listUserSendComplimentsController =
   new ListUserSendComplimentsController();
 const listTagsController = new ListTagsController();
 const listUsersController = new ListUsersController();
+const findUserDataController = new FindUserDataController();
 
-router.post("/users", createUserController.handle);
+router.post("/register", createUserController.handle);
 router.post(
   "/tags",
   ensureAuthenticated,
@@ -49,5 +51,6 @@ router.get(
 );
 router.get("/tags", ensureAuthenticated, listTagsController.handle);
 router.get("/users", ensureAuthenticated, listUsersController.handle);
+router.get("/user", ensureAuthenticated, findUserDataController.handle);
 
 export { router };
